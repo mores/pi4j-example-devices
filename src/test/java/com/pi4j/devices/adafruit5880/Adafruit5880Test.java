@@ -46,6 +46,9 @@ public class Adafruit5880Test {
 			byte ENCODER_BASE = 0x11;
 			byte ENCODER_POSITION = 0x30;
 
+			byte GPIO_BASE = 0x01;
+			byte GPIO_BULK = 0x04;
+
 			byte chipId = read8( STATUS_BASE, STATUS_HW_ID );
 			log.info( "chipId: " + chipId );
 
@@ -54,6 +57,9 @@ public class Adafruit5880Test {
 
 			int pid = version >> 16;
 			log.info( "pid: " + pid );
+
+			int pin = 24;
+			int pins = 1 << pin;
 
 			int lastPos = 0;
 			for( int x=0; x < 1000; x++ )
@@ -64,6 +70,15 @@ public class Adafruit5880Test {
 					log.info( "pos: " + pos );
 					lastPos = pos;
 				}
+
+				int button = read( GPIO_BASE, GPIO_BULK, 4 ).getInt();
+				int result = button & pins;
+
+				if( result == 0 )
+				{
+					log.info( "Button is Pressed" );
+				}
+
 				Thread.sleep( 5 );
 			}
 		}
