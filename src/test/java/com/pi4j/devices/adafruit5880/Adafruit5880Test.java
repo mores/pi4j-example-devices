@@ -49,6 +49,10 @@ public class Adafruit5880Test {
 			byte GPIO_BASE = 0x01;
 			byte GPIO_BULK = 0x04;
 
+			byte NEOPIXEL_BASE = 0x0E;
+			byte NEOPIXEL_BUF = 0x04;
+			byte NEOPIXEL_SHOW = 0x05;
+
 			byte chipId = read8( STATUS_BASE, STATUS_HW_ID );
 			log.info( "chipId: " + chipId );
 
@@ -57,6 +61,17 @@ public class Adafruit5880Test {
 
 			int pid = version >> 16;
 			log.info( "pid: " + pid );
+
+			byte[] msg = new byte[6];
+			msg[0] = NEOPIXEL_BUF;
+			msg[1] = 0x00;
+			msg[2] = 0x00;
+			msg[3] = 0x00;	// Green
+			msg[4] = 0x00;	// Red
+			msg[5] = 0x19;	// Blue
+			dev.writeRegister( NEOPIXEL_BASE, msg );
+
+			dev.writeRegister( NEOPIXEL_BASE, NEOPIXEL_SHOW );
 
 			int pin = 24;
 			int pins = 1 << pin;
