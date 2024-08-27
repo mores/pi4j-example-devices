@@ -43,6 +43,9 @@ public class Adafruit5880Test {
 			byte STATUS_HW_ID = 0x01;
 			byte STATUS_VERSION = 0x02;
 
+			byte ENCODER_BASE = 0x11;
+			byte ENCODER_POSITION = 0x30;
+
 			byte chipId = read8( STATUS_BASE, STATUS_HW_ID );
 			log.info( "chipId: " + chipId );
 
@@ -51,6 +54,18 @@ public class Adafruit5880Test {
 
 			int pid = version >> 16;
 			log.info( "pid: " + pid );
+
+			int lastPos = 0;
+			for( int x=0; x < 1000; x++ )
+			{
+				int pos = read( ENCODER_BASE, ENCODER_POSITION, 4 ).getInt();
+				if( lastPos != pos )
+				{
+					log.info( "pos: " + pos );
+					lastPos = pos;
+				}
+				Thread.sleep( 5 );
+			}
 		}
 		catch( Exception e)
 		{
