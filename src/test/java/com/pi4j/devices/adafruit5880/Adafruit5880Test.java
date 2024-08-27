@@ -66,9 +66,9 @@ public class Adafruit5880Test {
 			msg[0] = NEOPIXEL_BUF;
 			msg[1] = 0x00;
 			msg[2] = 0x00;
-			msg[3] = 0x00;	// Green
-			msg[4] = 0x00;	// Red
-			msg[5] = 0x19;	// Blue
+			msg[3] = (byte)0x00;	// Green
+			msg[4] = (byte)0x00;	// Red
+			msg[5] = (byte)0x00;	// Blue
 			dev.writeRegister( NEOPIXEL_BASE, msg );
 
 			dev.writeRegister( NEOPIXEL_BASE, NEOPIXEL_SHOW );
